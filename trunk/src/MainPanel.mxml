@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MainPanelBase 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns="*"
+	>
+			
+	<mx:TabNavigator
+		width="100%"
+		height="100%"
+		>
+			
+		<mx:Canvas
+			label="File"
+			>
+			<mx:VBox>
+				<mx:Button
+					label="Publish all"
+					click="onPublishClick()"
+				/>
+				<mx:Button
+					label="Compact all"
+					click="onCompactClick()"
+				/>
+			</mx:VBox>
+		</mx:Canvas>
+		
+		<mx:Canvas
+			label="Lib">
+			<mx:VBox>
+				<mx:TextInput
+					id="nameTemplateInput"
+					text="copy_*"
+				/>
+				<mx:HBox>
+					<mx:Button
+						label="Select all"
+						click="onSelectAllClick()"
+					/>
+					<mx:Button
+						label="Rename"
+						click="onRenameClick()"
+						enabled="{nameTemplateInput.text.length > 0}"
+					/>
+				</mx:HBox>
+				
+				<mx:Spacer/>
+				
+				<mx:HBox>
+					<mx:Button
+						label="Export as Class"
+						click="onLinkageClick()"
+					/>
+					<mx:Button
+						label="clear"
+						click="onLinkageClearClick()"
+					/>
+				</mx:HBox>
+				
+			</mx:VBox>
+			
+		</mx:Canvas>
+		
+		<mx:Canvas
+			label="Edit">
+			<mx:VBox>
+				<mx:Button
+					label="Selection: Move to (0,0)"
+					click="moveSelectionTo0()"
+				/>
+				<mx:Button
+					label="Layer: add stop frame"
+					click="newLayerAndStop()"
+				/>
+			</mx:VBox>
+		</mx:Canvas>
+		
+		<mx:Canvas
+			label="About">
+			
+			<mx:Label text=":)" />
+			
+		</mx:Canvas>
+	
+	</mx:TabNavigator>
+
+</MainPanelBase>
