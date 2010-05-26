@@ -27,19 +27,23 @@
 		<mx:Canvas
 			label="Lib">
 			<mx:VBox>
-				<mx:TextInput
-					id="nameTemplateInput"
-					text="copy_*"
+				<mx:Button
+					label="Find in library"
+					click="findInLibrary()"
+				/>
+				<mx:Button
+					label="Select all"
+					click="onSelectAllClick()"
 				/>
 				<mx:HBox>
-					<mx:Button
-						label="Select all"
-						click="onSelectAllClick()"
-					/>
 					<mx:Button
 						label="Rename"
 						click="onRenameClick()"
 						enabled="{nameTemplateInput.text.length > 0}"
+					/>
+					<mx:TextInput
+						id="nameTemplateInput"
+						text="copy_*"
 					/>
 				</mx:HBox>
 				

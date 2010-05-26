@@ -21,6 +21,43 @@
 			super();
 		}
 		
+		protected function templte():void 
+		{
+			var script:XML = <script><![CDATA[
+			]]></script>
+			CSUtil.ExecuteScript(script);
+		}
+		
+		protected function findInLibrary():void 
+		{
+			var script:XML = <script><![CDATA[
+				var selection = getDocument().selection[0];
+				var currLib = getLibrary();
+				
+				if (!selection) 
+				{
+					fl.trace('Error: Nothing selected.');
+				}
+				else if (!selection.libraryItem)
+				{
+					fl.trace('Error: Not a valid symbol.');
+				}
+				else
+				{
+					var libItem = selection.libraryItem.name;
+					var path = libItem.split("/");
+					if (path.length > 0)
+					{
+						path.pop();
+						var folderItem = path.join("/");
+						lib.expandFolder(true, true, folderItem);
+					}
+					currLib.selectItem(libItem);
+				}
+			]]></script>
+			CSUtil.ExecuteScript(script);
+		}
+		
 		protected function onPublishClick():void 
 		{
 			var script:XML = <script><![CDATA[
