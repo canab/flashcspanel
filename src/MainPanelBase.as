@@ -31,29 +31,42 @@
 		protected function findInLibrary():void 
 		{
 			var script:XML = <script><![CDATA[
-				var selection = getDocument().selection[0];
-				var currLib = getLibrary();
+			
+				var currDom = fl.getDocumentDOM();
+				var selItem = currDom.selection[0];
+				var currLib = currDom.library;
 				
-				if (!selection) 
+				if (!selItem)
 				{
 					fl.trace('Error: Nothing selected.');
 				}
-				else if (!selection.libraryItem)
+				else if (!selItem.libraryItem)
 				{
 					fl.trace('Error: Not a valid symbol.');
 				}
 				else
 				{
-					var libItem = selection.libraryItem.name;
-					var path = libItem.split("/");
-					if (path.length > 0)
-					{
-						path.pop();
-						var folderItem = path.join("/");
-						lib.expandFolder(true, true, folderItem);
-					}
-					currLib.selectItem(libItem);
+					
 				}
+				
+				var libItem = selItem.libraryItem;
+				var tmp = libItem.name.split('/');
+				tmp.pop();
+				
+				var n = '';
+				for (var i=0;i<tmp.length;i++) {
+					n += tmp[i];
+					currLib.expandFolder(true,false,n);
+					n += '/';
+				}
+				currLib.selectItem(libItem.name);
+				/*var openBoundClassUri = fl.configURI+'/Commands/OpenBoundClasses.jsfl';
+				if (libItem.linkageClassName) {
+					if (fl.fileExists(openBoundClassUri)) {
+						fl.runScript(openBoundClassUri, 'openBoundClasses');
+					}
+				}*/			
+			
 			]]></script>
 			CSUtil.ExecuteScript(script);
 		}
