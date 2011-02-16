@@ -137,6 +137,22 @@
 			CSUtil.ExecuteScript(script);
 		}
 		
+		protected function snapToPixels():void 
+		{
+			var script:XML = <script><![CDATA[
+				var doc = getDocument();
+				var elements = doc.selection;
+				for (var i = 0; i < elements.length; i++) 
+				{
+					var element = elements[i];
+					element.x = Math.round(element.x);
+					element.y = Math.round(element.y);
+				}
+			]]></script>
+				
+			CSUtil.ExecuteScript(script);
+		}
+		
 		protected function onLinkageClick():void 
 		{
 			var script:XML = <script><![CDATA[

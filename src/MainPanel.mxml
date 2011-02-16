@@ -72,6 +72,10 @@
 					click="moveSelectionTo0()"
 				/>
 				<mx:Button
+					label="Selection: Snap to pixels"
+					click="snapToPixels()"
+				/>
+				<mx:Button
 					label="Layer: add stop frame"
 					click="newLayerAndStop()"
 				/>
