@@ -3,6 +3,8 @@
 	import common.utils.StringUtil;
 	import flash.events.Event;
 	import flash.system.Security;
+	import flash.xml.XMLNode;
+	import flash.xml.XMLNodeType;
 	import mx.containers.Canvas;
 	import mx.controls.TextInput;
 	
@@ -13,6 +15,9 @@
 	public class MainPanelBase extends Canvas
 	{
 		[Bindable] public var nameTemplateInput:TextInput;
+		
+		[Embed(source = '../scripts/Duplicate Folder.jsfl', mimeType = 'application/octet-stream')]
+		static private const DUPLICATTE_FOLDER_SCRIPT:Class;
 		
 		public function MainPanelBase() 
 		{
@@ -26,6 +31,65 @@
 			var script:XML = <script><![CDATA[
 			]]></script>
 			CSUtil.ExecuteScript(script);
+		}
+		
+		protected function onCompileClick():void 
+		{
+			var script:XML = <script><![CDATA[
+				fl.trace("=========== Compile selection (not implemented) =============");
+			]]></script>
+			CSUtil.ExecuteScript(script);
+		}
+		
+		protected function onRenameFRClick(find:String, replace:String):void 
+		{
+			var template:XML = <script><![CDATA[
+			
+				fl.trace("=========== Rename selection =============");
+				
+				var doc = fl.getDocumentDOM();
+				var selection = doc.library.getSelectedItems();
+				
+				if (selection.length == 0)
+				{
+					alert("Please select at least one item in the library.");
+				}
+				else
+				{
+					for (var i = 0; i < selection.length; i++)
+					{
+						var item = selection[i];
+						
+						if (item.itemType == "folder")
+							continue;
+						
+						var currentName = item.name.split("/").pop();
+						var newName = currentName.replace(":find", ":replace");
+						item.name = newName;
+						fl.trace("renaming " + currentName + " to: "+newName);
+					}
+				}				
+				
+			]]></script>
+			
+			var script:String = String(template)
+				.replace(":find", find)
+				.replace(":replace", replace);
+				
+			CSUtil.ExecuteScript(script);
+		}
+		
+		protected function onDuplicateFolderClick():void 
+		{
+			runEmbedScript(DUPLICATTE_FOLDER_SCRIPT);
+		}
+		
+		private function runEmbedScript(classRef:Class):void 
+		{
+			var script:String = String(new classRef());
+			var xml:XML = <script/>;
+			xml.appendChild(new XMLNode(XMLNodeType.CDATA_NODE, script));
+			CSUtil.ExecuteScript(xml);
 		}
 		
 		protected function findInLibrary():void 
@@ -74,12 +138,16 @@
 		protected function onPublishClick():void 
 		{
 			var script:XML = <script><![CDATA[
+			
+				fl.trace("=========== Bublish =============");
+			
 				for (var i in fl.documents) {
 					var doc = fl.documents[i]
 					fl.trace(doc.name);
 					doc.publish();
 					doc.save();
 				}
+				
 			]]></script>
 			CSUtil.ExecuteScript(script);
 		}
@@ -87,15 +155,15 @@
 		protected function onCompactClick():void 
 		{
 			var script:XML = <script><![CDATA[
-				trace('------------------------------------');
-				trace('All: Save compact+close');
-				trace('------------------------------------');
+			
+				fl.trace("=========== Compact =============");
 				for (var i=0; i<fl.documents.length; i++)
 				{
 					fl.trace(fl.documents[0].name);
 					fl.documents[0].saveAndCompact();
 				}
 				trace('OK!');
+				
 			]]></script>
 			CSUtil.ExecuteScript(script);
 		}
@@ -129,9 +197,11 @@
 		protected function moveSelectionTo0():void 
 		{
 			var script:XML = <script><![CDATA[
+			
 				var doc = getDocument();
 				var rect = doc.getSelectionRect();
 				doc.moveSelectionBy( { x: -rect.left, y: -rect.top } );
+				
 			]]></script>
 				
 			CSUtil.ExecuteScript(script);
@@ -140,6 +210,7 @@
 		protected function snapToPixels():void 
 		{
 			var script:XML = <script><![CDATA[
+			
 				var doc = getDocument();
 				var elements = doc.selection;
 				for (var i = 0; i < elements.length; i++) 
@@ -148,6 +219,7 @@
 					element.x = Math.round(element.x);
 					element.y = Math.round(element.y);
 				}
+				
 			]]></script>
 				
 			CSUtil.ExecuteScript(script);
@@ -156,6 +228,8 @@
 		protected function onLinkageClick():void 
 		{
 			var script:XML = <script><![CDATA[
+				
+				fl.trace("=========== Linkage =============");
 				
 				var items = getLibrary().getSelectedItems();
 				for each (var item in items)
@@ -209,6 +283,8 @@
 		{
 			var script:XML = <script><![CDATA[
 				
+				fl.trace("=========== Clear Linkage =============");
+				
 				var items = getLibrary().getSelectedItems();
 				for each (var item in items)
 				{
@@ -233,6 +309,8 @@
 		{
 			var scriptTemplate:XML = <script><![CDATA[
 				
+				fl.trace("=========== Rename =============");
+				
 				var template = "$(template)";
 				
 				var items = getLibrary().getSelectedItems();
@@ -241,25 +319,9 @@
 					if (item.itemType == "folder")
 						continue;
 						
-					var path;
-					var name;
-					var pathIndex = item.name.lastIndexOf("/");
-					if (pathIndex >= 0)
-					{
-						path = "";
-						name = item.name;
-					}
-					else
-					{
-						path = item.name.substring(0, pathIndex + 1);
-						name = item.name.substring(pathIndex + 1);
-					}
+					var name = item.name.split("/").pop();
 					var newName = template.replace('*', name);
 					item.name = newName;
-					
-					//trace('---------------')
-					//trace(item.name)
-					//trace(newName)
 				}
 				
 				alert("" + items.length + " items renamed.")
