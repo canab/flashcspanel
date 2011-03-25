@@ -26,6 +26,7 @@
     <option optimize="False" />
     <option showActionScriptWarnings="True" />
     <option showBindingWarnings="True" />
+    <option showInvalidCSS="True" />
     <option showDeprecationWarnings="True" />
     <option showUnusedTypeSelectorWarnings="True" />
     <option strict="True" />
@@ -38,7 +39,7 @@
     <option staticLinkRSL="True" />
     <option additional="" />
     <option compilerConstants="" />
-    <option customSDK="" />
+    <option customSDK="D:\development\flex_sdk_3" />
   </build>
   <!-- SWC Include Libraries -->
   <includeLibraries>

@@ -6,7 +6,36 @@
 	paddingRight="4"
 	paddingTop="4"
 	paddingBottom="4"
+	creationComplete="onCreationComplete()"
 	>
+	
+	<mx:Script>
+		<![CDATA[
+			import flash.events.Event;
+			
+			private function onCreationComplete():void 
+			{
+				if (stage)
+					onAddedToStage(null);
+				else
+					addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			}
+			
+			private function onAddedToStage(e:Event):void 
+			{
+				removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+				stage.addEventListener(Event.RESIZE, onResize);
+				onResize();
+			}
+			
+			private function onResize(e:Event = null):void 
+			{
+				width = stage.stageWidth;
+				height = stage.stageHeight;
+			}
+			
+		]]>
+	</mx:Script>
 		
 	<MainPanel
 		width="100%"
