@@ -42,8 +42,15 @@
 				
 				<mx:HBox>
 					<mx:Button
-						label="Compile Selection"
-						click="onCompileClick()"
+						label="Compile (toFolder)"
+						click="onCompileClick(compileDestFolder.text)"
+						enabled="{compileDestFolder.text.length > 0}"
+					/>
+					<mx:TextInput
+						width="30%"
+						id="compileDestFolder"
+						toolTip="destFolder"
+						text="!compiled"
 					/>
 				</mx:HBox>
 				
@@ -58,6 +65,7 @@
 					<mx:TextInput
 						width="30%"
 						id="nameTemplateInput"
+						toolTip="mask"
 						text="copy_*"
 					/>
 				</mx:HBox>
@@ -70,11 +78,13 @@
 					<mx:TextInput
 						width="30%"
 						id="renameFind"
+						toolTip="whatToFind"
 						text=""
 					/>
 					<mx:TextInput
 						width="30%"
 						id="renameRepl"
+						toolTip="replaceTo"
 						text=""
 					/>
 				</mx:HBox>
