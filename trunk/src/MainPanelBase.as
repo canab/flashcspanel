@@ -57,7 +57,7 @@
 					if (item.itemType != "component" && item.itemType != "movie clip")
 						continue;
 					
-					var destName = destFolder + "/" + item.name.split("/").pop() + " SWF";
+					var destName = destFolder + "/" + item.name.split("/").pop();
 					
 					fl.trace(item.name + " > " + destName);
 					
