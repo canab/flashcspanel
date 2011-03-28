@@ -26,18 +26,68 @@
 			super();
 		}
 		
-		protected function templte():void 
+		protected function TEMPLATE():void 
 		{
 			var script:XML = <script><![CDATA[
 			]]></script>
 			CSUtil.ExecuteScript(script);
 		}
 		
-		protected function onCompileClick():void 
+		protected function onCompileClick(destFolder:String):void 
 		{
-			var script:XML = <script><![CDATA[
-				fl.trace("=========== Compile selection (not implemented) =============");
+			var template:XML = <script><![CDATA[
+			
+				fl.trace("=========== Convert to compiled clip =============");
+				
+				var doc = fl.getDocumentDOM();
+				var lib = doc.library;
+				var selection = lib.getSelectedItems();
+				var destFolder = ":destFolder";
+				
+				if (selection.length == 0)
+					alert("Please select at least one item in the library.");
+					
+				if (!lib.itemExists(destFolder))
+					lib.addNewItem("folder", destFolder);
+					
+				for (var i = 0; i < selection.length; i++)
+				{
+					var item = selection[i];
+					
+					if (item.itemType != "component" && item.itemType != "movie clip")
+						continue;
+					
+					var destName = destFolder + "/" + item.name.split("/").pop() + " SWF";
+					
+					fl.trace(item.name + " > " + destName);
+					
+					if (lib.itemExists(destName))
+						lib.deleteItem(destName);
+					
+					item.convertToCompiledClip();
+					
+					var newName = item.name + " SWF"
+					lib.selectItem(newName);
+					var newItem = lib.getSelectedItems()[0];
+					
+					if (newItem.name == newName)
+					{
+						//newItem.linkageClassName = "";
+						//newItem.linkageExportForAS = false;					
+						lib.moveToFolder(destFolder, newItem.name, true);
+						newItem.name = item.name.split("/").pop();
+					}
+					else
+					{
+						trace("FAILED!")
+					}
+				}
+				
 			]]></script>
+			
+			var script:String = String(template)
+				.replace(":destFolder", destFolder);
+			
 			CSUtil.ExecuteScript(script);
 		}
 		
@@ -253,6 +303,7 @@
 						&& item.itemType != 'bitmap'
 						&& item.itemType != 'font'
 						&& item.itemType != 'sound'
+						&& item.itemType != 'component'
 					)
 					{
 						continue;
