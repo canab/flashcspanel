@@ -61,8 +61,18 @@
 					
 					fl.trace(item.name + " > " + destName);
 					
+					var linkageExportForRS = false;
+					var linkageURL = "";
+					
 					if (lib.itemExists(destName))
+					{
+						lib.selectItem(destName);
+						var destItem = lib.getSelectedItems()[0];
+						
+						linkageExportForRS = destItem.linkageExportForRS;
+						linkageURL = destItem.linkageURL;
 						lib.deleteItem(destName);
+					}
 					
 					item.convertToCompiledClip();
 					
@@ -72,8 +82,11 @@
 					
 					if (newItem.name == newName)
 					{
-						//newItem.linkageClassName = "";
-						//newItem.linkageExportForAS = false;					
+						//newItem.linkageExportForAS = true;					
+						//newItem.linkageClassName = newItem.linkageClassName;
+						newItem.linkageExportForRS = item.linkageExportForRS;					
+						newItem.linkageURL = item.linkageURL;					
+						
 						lib.moveToFolder(destFolder, newItem.name, true);
 						newItem.name = item.name.split("/").pop();
 					}
