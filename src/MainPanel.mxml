@@ -119,6 +119,11 @@
 					label="Layer: add stop frame"
 					click="newLayerAndStop()"
 				/>
+				<mx:Button
+					label="Layer: Swap Symbol"
+					toolTip="Swaps a symbol in all frames in the current layer to symbol selected in the library."
+					click="layerSwapSymbol()"
+				/>
 			</mx:VBox>
 		</mx:Canvas>
 		

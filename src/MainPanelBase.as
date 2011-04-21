@@ -33,6 +33,49 @@
 			CSUtil.ExecuteScript(script);
 		}
 		
+		protected function layerSwapSymbol():void 
+		{
+			var script:XML = <script><![CDATA[
+			
+				var doc = fl.getDocumentDOM();
+				var timeline = doc.getTimeline();
+				var layer = timeline.layers[timeline.currentLayer];
+				var frames = layer.frames;
+				
+				var selectedItems = doc.library.getSelectedItems();
+				if (selectedItems.length != 1)
+				{
+					alert("One item should be selected in library")
+				}
+				
+				var item = selectedItems[0];
+				if (item.itemType != "component"
+					&& item.itemType != "movie clip"
+					&& item.itemType != "graphic"
+					&& item.itemType != "button"
+					&& item.itemType != "bitmap"
+					&& item.itemType != "compiled clip"
+					&& item.itemType != "video")
+				{
+					alert("Incorrect item type is selected in library");
+				}
+				
+				fl.trace("replace to: " + item.name);
+				
+				for (var i = 0; i < frames.length; i++)
+				{ 
+					var frame = frames[i];
+					if (frame.startFrame == i) { 
+						timeline.setSelectedFrames(i, i);
+						doc.swapElement(item.name);
+					} 
+				}
+			
+			]]></script>
+			
+			CSUtil.ExecuteScript(script);
+		}
+		
 		protected function onCompileClick(destFolder:String):void 
 		{
 			var template:XML = <script><![CDATA[
