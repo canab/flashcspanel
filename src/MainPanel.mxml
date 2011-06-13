@@ -116,6 +116,11 @@
 					click="snapToPixels()"
 				/>
 				<mx:Button
+					label="Selection: Apply lib name"
+					toolTip="Sets library name to symbol name."
+					click="applyLibName()"
+				/>
+				<mx:Button
 					label="Layer: add stop frame"
 					click="newLayerAndStop()"
 				/>

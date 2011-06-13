@@ -198,6 +198,33 @@
 			CSUtil.ExecuteScript(xml);
 		}
 		
+		protected function applyLibName():void 
+		{
+			var script:XML = <script><![CDATA[
+			
+				trace("applyLibName:");
+				
+				var doc = fl.getDocumentDOM();
+				var selection = doc.selection;
+				var lib = doc.library;
+				
+				for (var i = 0; i < selection.length; i++)
+				{
+					var item = selection[i];
+					var libraryItem = item.libraryItem;
+					
+					if (libraryItem != null)
+					{
+						item.name = libraryItem.name;
+						trace(item.name);
+					}
+				}
+				
+				trace("done");
+			]]></script>
+			CSUtil.ExecuteScript(script);
+		}
+		
 		protected function findInLibrary():void 
 		{
 			var script:XML = <script><![CDATA[
