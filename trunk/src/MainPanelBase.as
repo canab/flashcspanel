@@ -213,9 +213,19 @@
 					var item = selection[i];
 					var libraryItem = item.libraryItem;
 					
-					if (libraryItem != null)
+					if (libraryItem != null
+						&&	(
+								libraryItem.itemType == "component"
+								|| libraryItem.itemType == "movie clip"
+								|| libraryItem.itemType == "graphic"
+								|| libraryItem.itemType == "button"
+								|| libraryItem.itemType == "bitmap"
+								|| libraryItem.itemType == "compiled clip"
+								|| libraryItem.itemType == "video"
+							)
+						)
 					{
-						item.name = libraryItem.name;
+						item.name = libraryItem.name.split("/").pop();
 						trace(item.name);
 					}
 				}
