@@ -28,7 +28,7 @@
 		
 		private function onStageClick(e:MouseEvent):void 
 		{
-			if (e.ctrlKey)
+			if (e.ctrlKey && e.shiftKey)
 				reloadPanel();
 		}
 		
