@@ -193,9 +193,7 @@
 		private function runEmbedScript(classRef:Class):void 
 		{
 			var script:String = String(new classRef());
-			var xml:XML = <script/>;
-			xml.appendChild(new XMLNode(XMLNodeType.CDATA_NODE, script));
-			CSUtil.ExecuteScript(xml);
+			CSUtil.ExecuteScript(script);
 		}
 		
 		protected function applyLibName():void 
