@@ -410,7 +410,7 @@
 					item.linkageClassName = className;
 					
 					//trace(item.name);
-					//trace(className);
+					trace(className);
 				}
 				
 				libRefreshSelection();
