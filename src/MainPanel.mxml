@@ -9,59 +9,49 @@
 		<mx:Canvas
 			label="File"
 			>
-			<mx:VBox>
+			<mx:HBox>
+				<mx:Label text="All files:"/>
 				<mx:Button
-					label="Publish all"
+					label="Publish"
 					click="onPublishClick()"
 				/>
 				<mx:Button
-					label="Compact all"
+					label="Compact"
 					click="onCompactClick()"
 				/>
-			</mx:VBox>
+			</mx:HBox>
 		</mx:Canvas>
 		
 		<mx:Canvas label="Lib" width="100%" height="100%">
 			
 			<mx:VBox width="100%" height="100%">
 				<mx:Button
-					label="Select all"
+					label="(All)"
+					toolTip="Select all items in library"
 					click="onSelectAllClick()"
 				/>
 				
 				<mx:HBox>
 					<mx:Button
-						label="Export as Class"
+						label="--> Export"
+						toolTip="Export selected items as Class"
 						click="onLinkageClick()"
 					/>
 					<mx:Button
-						label="clear"
+						label="x"
+						toolTip="Clear exporting for selected items"
 						click="onLinkageClearClick()"
 					/>
 				</mx:HBox>
 				
-				<mx:HBox>
-					<mx:Button
-						label="Compile (toFolder)"
-						click="onCompileClick(compileDestFolder.text)"
-						enabled="{compileDestFolder.text.length > 0}"
-					/>
-					<mx:TextInput
-						width="30%"
-						id="compileDestFolder"
-						toolTip="destFolder"
-						text="!compiled"
-					/>
-				</mx:HBox>
-				
-				<mx:Spacer />
-				
 				<mx:HBox width="100%">
 					<mx:Button
-						label="Rename (by mask)"
+						label="Rename"
+						toolTip="Rename selected items by mask"
 						click="onRenameClick()"
 						enabled="{nameTemplateInput.text.length > 0}"
 					/>
+					<mx:Label text="mask:" />
 					<mx:TextInput
 						width="30%"
 						id="nameTemplateInput"
@@ -72,7 +62,8 @@
 				
 				<mx:HBox width="100%">
 					<mx:Button
-						label="Rename (Find/Repl)"
+						label="Rename"
+						toolTip="Rename selected items by find/replace text in a name"
 						click="onRenameFRClick(renameFind.text, renameRepl.text)"
 					/>
 					<mx:TextInput
@@ -96,8 +87,25 @@
 				
 				<mx:Spacer />
 				
+				<mx:HBox>
+					<mx:Button
+						label="Compile"
+						toolTip="Compile selected item as SWF items to given folder in the library"
+						click="onCompileClick(compileDestFolder.text)"
+						enabled="{compileDestFolder.text.length > 0}"
+					/>
+					<mx:Label text="to folder:" />
+					<mx:TextInput
+						width="30%"
+						id="compileDestFolder"
+						toolTip="destFolder"
+						text="!compiled"
+					/>
+				</mx:HBox>
+				
 				<mx:Button
 					label="Find in library"
+					toolTip="Find in a library selected on a scene symbol"
 					click="findInLibrary()"
 				/>
 			</mx:VBox>
@@ -108,24 +116,36 @@
 			label="Edit">
 			<mx:VBox>
 				<mx:Button
-					label="Selection: Move to (0,0)"
+					label="--> (0,0)"
+					toolTip="Move selection to (0,0)"
 					click="moveSelectionTo0()"
 				/>
 				<mx:Button
-					label="Selection: Snap to pixels"
+					label="--> Snap to pixels"
+					toolTip="Snap selection to pixels"
 					click="snapToPixels()"
 				/>
+				<mx:HBox>
+					<mx:Button
+						label="name &lt;-- lib name"
+						toolTip="Sets library name to symbol name."
+						click="applyLibName(libNameCounter.text)"
+					/>
+					<mx:Label text="counter:"/>
+					<mx:TextInput
+						id="libNameCounter"
+						restrict="[0-9]"
+						toolTip="Add counter from:"
+						width="40"
+						/>
+				</mx:HBox>
 				<mx:Button
-					label="Selection: Apply lib name"
-					toolTip="Sets library name to symbol name."
-					click="applyLibName()"
-				/>
-				<mx:Button
-					label="Layer: add stop frame"
+					label="L: stop()"
+					toolTip="Create new layer and add stop() script in a last frame."
 					click="newLayerAndStop()"
 				/>
 				<mx:Button
-					label="Layer: Swap Symbol"
+					label="L: Swap Symbol"
 					toolTip="Swaps a symbol in all frames in the current layer to symbol selected in the library."
 					click="layerSwapSymbol()"
 				/>
