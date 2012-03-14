@@ -196,15 +196,20 @@
 			CSUtil.ExecuteScript(script);
 		}
 		
-		protected function applyLibName():void 
+		protected function applyLibName(counter:String):void 
 		{
+			var index:int = counter.length > 0 ? int(counter) : -1;
+			
 			var script:XML = <script><![CDATA[
 			
-				trace("applyLibName:");
+				trace("-- applyLibName: --");
 				
 				var doc = fl.getDocumentDOM();
 				var selection = doc.selection;
 				var lib = doc.library;
+				
+				selection.sort(function(a, b) { return a.x - b.x});
+				var index = #index;
 				
 				for (var i = 0; i < selection.length; i++)
 				{
@@ -223,14 +228,17 @@
 							)
 						)
 					{
-						item.name = libraryItem.name.split("/").pop();
+						var suffix = (index >= 0) ? index++ : "";
+							
+						var itemName = libraryItem.name.split("/").pop();
+						item.name = itemName + suffix;
 						trace(item.name);
 					}
 				}
 				
 				trace("done");
 			]]></script>
-			CSUtil.ExecuteScript(script);
+			CSUtil.ExecuteScript(String(script).replace("#index", index));
 		}
 		
 		protected function findInLibrary():void 
