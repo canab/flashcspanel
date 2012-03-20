@@ -8,6 +8,8 @@
 			
 		<mx:Canvas
 			label="File"
+			horizontalScrollPolicy="off"
+			verticalScrollPolicy="off"
 			>
 			<mx:HBox>
 				<mx:Label text="All files:"/>
@@ -22,15 +24,12 @@
 			</mx:HBox>
 		</mx:Canvas>
 		
-		<mx:Canvas label="Lib" width="100%" height="100%">
+		<mx:Canvas label="Lib" width="100%" height="100%"
+			horizontalScrollPolicy="off"
+			verticalScrollPolicy="off"
+		>
 			
 			<mx:VBox width="100%" height="100%">
-				<mx:Button
-					label="(All)"
-					toolTip="Select all items in library"
-					click="onSelectAllClick()"
-				/>
-				
 				<mx:HBox>
 					<mx:Button
 						label="--> Export"
@@ -103,17 +102,27 @@
 					/>
 				</mx:HBox>
 				
-				<mx:Button
-					label="Find in library"
-					toolTip="Find in a library selected on a scene symbol"
-					click="findInLibrary()"
-				/>
+				<mx:HBox>
+					<mx:Button
+						label="Select all"
+						toolTip="Select all items in library"
+						click="onSelectAllClick()"
+					/>
+					<mx:Button
+						label="Find in library"
+						toolTip="Find in a library selected on a scene symbol"
+						click="findInLibrary()"
+					/>
+				</mx:HBox>
 			</mx:VBox>
 			
 		</mx:Canvas>
 		
 		<mx:Canvas
-			label="Edit">
+			label="Edit"
+			horizontalScrollPolicy="off"
+			verticalScrollPolicy="off"
+			>
 			<mx:VBox>
 				<mx:Button
 					label="--> (0,0)"
@@ -153,7 +162,10 @@
 		</mx:Canvas>
 		
 		<mx:Canvas
-			label="About">
+			label="About"
+			horizontalScrollPolicy="off"
+			verticalScrollPolicy="off"
+			>
 			
 			<mx:Label text=":)" />
 			
