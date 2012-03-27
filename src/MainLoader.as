@@ -14,7 +14,7 @@
 	 */
 	public class MainLoader extends Sprite
 	{
-		static public const MAIN_PATH:String = 'file:///d|/flash/FlashCSPanel/bin/FlashCSPanel.swf';
+		static public const MAIN_PATH:String = 'file:///d|/projects/FlashCSPanel/bin/FlashCSPanel.swf';
 		
 		private var _loader:Loader;
 		
