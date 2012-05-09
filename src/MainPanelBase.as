@@ -390,7 +390,7 @@
 					for (var i = 0; i < item.name.length; i++)
 					{
 						var char = item.name.charAt(i);
-						if (isAlphanum(char))
+						if (isAlphanum(char) || char == "_")
 							className += char;
 						else if (char == "/")
 							className += ".";
