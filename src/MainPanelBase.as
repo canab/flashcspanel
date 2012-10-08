@@ -390,7 +390,7 @@
 					for (var i = 0; i < item.name.length; i++)
 					{
 						var char = item.name.charAt(i);
-						if (isAlphanum(char) || char == "_")
+						if (isAlphanum(char) || char == "_" || char == "$")
 							className += char;
 						else if (char == "/")
 							className += ".";
@@ -441,10 +441,11 @@
 					if (item.itemType == "folder")
 						continue;
 						
-					item.linkageClassName = "";
-					item.linkageExportForAS = false;
-					//trace(item.name);
-					//trace(className);
+					if (item.linkageExportForAS == true)
+					{
+						item.linkageClassName = "";
+						item.linkageExportForAS = false;
+					}
 				}
 				
 				libRefreshSelection();
