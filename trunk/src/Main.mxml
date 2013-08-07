@@ -11,8 +11,7 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import flash.events.Event;
-			
+
 			private function onCreationComplete():void 
 			{
 				if (stage)

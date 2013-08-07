@@ -8,7 +8,12 @@
 	public class ScriptLib
 	{
 		static public var initialize:XML =  <script><![CDATA[
-			
+
+			var removeSpaces = function(str)
+			{
+			  return str.replace(/\s+/g, '');
+			}
+
 			var getDocument = function()
 			{
 				return fl.getDocumentDOM();
