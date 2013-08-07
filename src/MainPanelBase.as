@@ -377,25 +377,32 @@
 		protected function onLinkageClick():void 
 		{
 			var script:XML = <script><![CDATA[
-				
+
 				fl.trace("=========== Linkage =============");
 				
 				var items = getLibrary().getSelectedItems();
+
+				var getClassName = function(path)
+				{
+					var parts = path.split("/");
+					var packages = [];
+					for (var i = 0; i < parts.length; i++)
+					{
+						var part = removeSpaces(parts[i]);
+						var prefix = part.substring(0, 1);
+						if (prefix != "-")
+						packages.push(part);
+					}
+					return packages.join(".");
+				}
+
 				for each (var item in items)
 				{
 					if (item.itemType == "folder")
 						continue;
 						
-					var className = "";
-					for (var i = 0; i < item.name.length; i++)
-					{
-						var char = item.name.charAt(i);
-						if (isAlphanum(char) || char == "_" || char == "$")
-							className += char;
-						else if (char == "/")
-							className += ".";
-					}
-					
+					var className = getClassName(item.name);
+
 					var baseClass = '';
 					if (item.itemType != 'movie clip'
 						&& item.itemType != 'button'
@@ -422,9 +429,9 @@
 				}
 				
 				libRefreshSelection();
-			
+
 			]]></script>
-			
+
 			CSUtil.ExecuteScript(script);
 			
 		}
